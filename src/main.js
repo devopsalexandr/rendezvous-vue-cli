@@ -5,8 +5,17 @@ import store from './store'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import HttpApiClient from "./services/HttpApiClient";
+import localforage from "localforage";
 
 Vue.config.productionTip = false;
+
+localforage.config({
+  driver: localforage.LOCALSTORAGE,
+  storeName: 'socialite'
+});
+
+HttpApiClient.init(process.env.VUE_APP_API_URI);
 
 Vue.use(BootstrapVue);
 
