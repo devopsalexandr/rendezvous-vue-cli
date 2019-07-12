@@ -9,7 +9,7 @@ const TokenService = {
         return localforage.getItem(TOKEN_KEY)
     },
 
-    saveToken(accessToken) {
+    setToken(accessToken) {
         localforage.setItem(TOKEN_KEY, accessToken)
     },
 

@@ -1,5 +1,6 @@
 import localforage from "localforage";
 import AuthService from "../services/AuthService";
+import {TokenService} from "../services/TokenService";
 
 export default {
     namespaced: true,
@@ -21,10 +22,10 @@ export default {
 
         setToken(state, token) {
             if(!token){
-                localforage.removeItem('token');
+                TokenService.removeToken();
             }
 
-            localforage.setItem('token', token)
+            TokenService.setToken(token)
         },
 
         setAuthenticated(state, bool) {
@@ -40,20 +41,9 @@ export default {
     actions: {
 
         login({ commit, dispatch }, {payload, context}) {
-            // return axios.post('http://127.0.0.1:8000/api/login', payload).then((response) => {
-            //
-            //     dispatch('setToken', response.data.meta.token);
-            //
-            //     commit('setAuthenticated', true);
-            //     commit('setUserData', response.data.data);
-            //
-            // }).catch((error) => {
-            //     context.errors = error.response.data.errors;
-            //     throw error
-            // });
 
             AuthService.login(payload.email, payload.password).then((response) => {
-                console.log(response.data);
+                commit('setToken', response.data.meta.token);
             });
         },
 
