@@ -29,7 +29,7 @@ export default {
         },
 
         setAuthenticated(state, bool) {
-            state.user.authenticated = bool;
+            state.user.isAuthenticated = bool;
         },
 
         setUserData(state, user) {
@@ -44,6 +44,11 @@ export default {
 
             AuthService.login(payload.email, payload.password).then((response) => {
                 commit('setToken', response.data.meta.token);
+                commit('setAuthenticated', true);
+                commit('setUserData', response.data.data);
+            }).catch((error) => {
+                context.errors = error.response.data.errors;
+                throw error
             });
         },
 

@@ -71,8 +71,6 @@
 
 <script>
     import { mapActions } from 'vuex'
-    import { isEmpty } from "lodash";
-    import localforage from "localforage";
 
     export default {
 
@@ -97,6 +95,8 @@
                     },
 
                     context: this
+                }).then(() => {
+                    this.$router.replace({name: 'home'})
                 });
             }
 
