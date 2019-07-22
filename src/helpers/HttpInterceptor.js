@@ -1,11 +1,12 @@
 import axios from "axios";
-import {TokenService} from "../services/TokenService";
+import {SecurityService} from "../services/SecurityService";
 
 export default function setup() {
-    axios.interceptors.request.use(function(config) {
-        const token = TokenService.getToken();
+    axios.interceptors.request.use( async function (config) {
 
-        if(token) {
+        let token = await SecurityService.getToken();
+
+        if(token){
             config.headers.Authorization = `Bearer ${token}`;
         }
 

@@ -21,6 +21,7 @@
 
 <script>
   import NavBar from "./views/NavBar";
+  import HttpApiClient from "./services/HttpApiClient";
 
   export default {
     components: {

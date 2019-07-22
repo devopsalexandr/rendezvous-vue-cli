@@ -5,7 +5,9 @@ import store from './store'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
 import HttpApiClient from "./services/HttpApiClient";
+import interceptorSetup from "./helpers/HttpInterceptor";
 import localforage from "localforage";
 
 Vue.config.productionTip = false;
@@ -16,6 +18,21 @@ localforage.config({
 });
 
 HttpApiClient.init(process.env.VUE_APP_API_URI);
+
+interceptorSetup();
+
+store.dispatch('auth/setToken').then(() => {
+
+  store.dispatch('auth/fetchCurrentUser').catch(() => {
+    store.dispatch('auth/clearAuth');
+    router.replace({name: 'login'});
+  });
+
+}).catch(() => {
+  store.dispatch('auth/clearAuth');
+});
+
+
 
 Vue.use(BootstrapVue);
 

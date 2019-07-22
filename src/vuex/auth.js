@@ -1,6 +1,7 @@
-import localforage from "localforage";
+
+import {SecurityService} from "../services/SecurityService";
 import AuthService from "../services/AuthService";
-import {TokenService} from "../services/TokenService";
+import UserService from "../services/UserService";
 
 export default {
     namespaced: true,
@@ -22,10 +23,10 @@ export default {
 
         setToken(state, token) {
             if(!token){
-                TokenService.removeToken();
+                SecurityService.removeToken();
             }
 
-            TokenService.setToken(token)
+            SecurityService.setToken(token)
         },
 
         setAuthenticated(state, bool) {
@@ -41,16 +42,53 @@ export default {
     actions: {
 
         login({ commit, dispatch }, {payload, context}) {
+            return AuthService.login(payload.email, payload.password).then((response) => {
 
-            AuthService.login(payload.email, payload.password).then((response) => {
-                commit('setToken', response.data.meta.token);
+                dispatch('setToken', response.data.meta.token);
+
                 commit('setAuthenticated', true);
                 commit('setUserData', response.data.data);
+
             }).catch((error) => {
                 context.errors = error.response.data.errors;
                 throw error
             });
         },
 
+        setToken({ commit, dispatch }, token) {
+
+            if(!token){
+                return dispatch('checkStorageTokenExist');
+            }
+
+            commit('setToken', token);
+        },
+
+        checkStorageTokenExist() {
+
+            return SecurityService.getToken().then((token) => {
+
+                if(!token){
+                    return Promise.reject('NO TOKEN');
+                }
+
+                return Promise.resolve(token);
+            });
+        },
+
+        clearAuth({commit}) {
+            commit('setToken', null);
+            commit('setAuthenticated', false);
+            commit('setUserData', null);
+        },
+
+        fetchCurrentUser({ commit }) {
+
+            return UserService.getProfile().then((response) => {
+                commit('setAuthenticated', true);
+                commit('setUserData', response.data.data);
+            });
+
+        },
     }
 }

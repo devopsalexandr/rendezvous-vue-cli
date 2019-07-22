@@ -3,7 +3,7 @@ import * as localforage from "localforage";
 const TOKEN_KEY = 'access_token';
 const REFRESH_TOKEN_KEY = 'refresh_token';
 
-const TokenService = {
+const SecurityService = {
 
     getToken() {
         return localforage.getItem(TOKEN_KEY)
@@ -31,4 +31,4 @@ const TokenService = {
 
 };
 
-export { TokenService };
+export { SecurityService };
