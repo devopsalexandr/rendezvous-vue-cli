@@ -8,6 +8,16 @@ const UserService = {
 
     uploadAvatar(fd) {
         return HttpApiClient.post('/photos', fd);
+    },
+
+    updateStatus(string) {
+        let status = { 'tiny_about': string };
+        // return HttpApiClient.put('/profile', status);
+        return this.updateProfile(status);
+    },
+
+    updateProfile(dataObject) {
+        return HttpApiClient.put('/profile', dataObject);
     }
 };
 

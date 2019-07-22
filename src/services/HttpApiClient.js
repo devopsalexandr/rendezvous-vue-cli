@@ -12,6 +12,10 @@ const HttpApiClient = {
 
     post(path, data) {
         return axios.post(path, data);
+    },
+
+    put(path, data) {
+        return axios.put(path, data);
     }
 };
 

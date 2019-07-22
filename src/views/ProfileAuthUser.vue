@@ -1,7 +1,6 @@
 <template>
     <div class="container emp-profile">
         <div class="row" v-if="user">
-
             <avatar v-if="user.avatar" :image="user.avatar.path" :isOwner="true" />
 
             <div class="col-md-6">
@@ -11,7 +10,7 @@
                         {{ user.name }}
                     </h5>
 
-                    <h6>this is status</h6>
+                    <status :status="user.tiny_about" :editable="true"/>
 
                     <p class="proile-rating">RANKINGS : <span>8/10</span></p>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -57,11 +56,13 @@
 <script>
     import { mapGetters } from 'vuex';
     import Avatar from "../components/profile/Avatar";
+    import Status from "../components/profile/Status";
 
     export default {
 
         components: {
-            'avatar': Avatar
+            'avatar': Avatar,
+            'status': Status
         },
 
         computed: {
