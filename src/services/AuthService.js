@@ -13,6 +13,20 @@ const AuthService = {
 
     logout(){
         return HttpApiClient.post('/logout')
+    },
+
+    register(email, name, password, country, city, birthday, sex){
+        let data = {
+            email: email,
+            name: name,
+            password: password,
+            country: country,
+            city: city,
+            birthday: birthday,
+            sex: sex
+        };
+
+        return HttpApiClient.post('/register', data);
     }
 };
 

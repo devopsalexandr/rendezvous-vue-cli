@@ -55,6 +55,29 @@ export default {
             });
         },
 
+        register({ commit, dispatch }, {payload, context}) {
+
+            return AuthService.register(
+                    payload.email,
+                    payload.name,
+                    payload.password,
+                    payload.country,
+                    payload.city,
+                    payload.birthday,
+                    payload.sex
+            ).then((response) => {
+
+                dispatch('setToken', response.data.meta.token);
+
+                commit('setAuthenticated', true);
+                commit('setUserData', response.data.data);
+
+            }).catch((error) => {
+                context.errors = error.response.data.errors;
+                throw  error;
+            });
+        },
+
         logout({ dispatch }) {
             return AuthService.logout().then(() => {
                 dispatch('clearAuth');
