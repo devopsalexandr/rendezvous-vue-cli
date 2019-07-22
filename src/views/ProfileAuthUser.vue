@@ -2,16 +2,7 @@
     <div class="container emp-profile">
         <div class="row" v-if="user">
 
-            <div class="col-md-4">
-                <div class="profile-img">
-                    <img src="../assets/images/default-avatar.png" alt="">
-                    <div class="file btn btn-lg btn-primary" v-if="isOwner">
-                        Change Photo
-                        <input type="file" name="file" @change="onFileSelected" />
-                    </div>
-                </div>
-
-            </div>
+            <avatar v-if="user.avatar" :image="user.avatar.path" :isOwner="true" />
 
             <div class="col-md-6">
 
@@ -39,8 +30,8 @@
                 </div>
             </div>
             <div class="col-md">
-                <input v-if="!editing" type="submit" class="profile-edit-btn" @click="startEditProfile" value="Edit Profile"/>
-                <input v-else type="submit" class="btn btn-primary" @click="saveProfileChanges" value="Save changes"/>
+<!--                <input v-if="!editing" type="submit" class="profile-edit-btn" @click="startEditProfile" value="Edit Profile"/>-->
+<!--                <input v-else type="submit" class="btn btn-primary" @click="saveProfileChanges" value="Save changes"/>-->
             </div>
 
         </div>
@@ -65,10 +56,13 @@
 
 <script>
     import { mapGetters } from 'vuex';
-
+    import Avatar from "../components/profile/Avatar";
 
     export default {
 
+        components: {
+            'avatar': Avatar
+        },
 
         computed: {
             ...mapGetters({
