@@ -1,4 +1,3 @@
-
 import {SecurityService} from "../services/SecurityService";
 import AuthService from "../services/AuthService";
 import UserService from "../services/UserService";
@@ -16,6 +15,10 @@ export default {
     getters: {
         user(state) {
             return state.user;
+        },
+
+        userData(state) {
+            return state.user.data;
         }
     },
 

@@ -3,8 +3,9 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Login from "./views/Auth/Login";
 import Register from "./views/Auth/Register";
+import Profile from "./views/ProfileAuthUser";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   mode: 'history',
@@ -24,6 +25,11 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile
     },
   ]
 })
