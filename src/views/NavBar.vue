@@ -40,13 +40,18 @@
     import {mapGetters} from "vuex";
 
     export default {
-        name: "NavBar",
-
         computed: {
             ...mapGetters({
                 user: 'auth/user'
             })
         },
+
+        methods: {
+            async logout(){
+                await this.$store.dispatch('auth/logout');
+                 this.$router.replace({ name: 'login'});
+            }
+        }
     }
 </script>
 

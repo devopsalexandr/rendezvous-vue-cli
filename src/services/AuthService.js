@@ -9,6 +9,10 @@ const AuthService = {
         };
 
         return HttpApiClient.post('/login', data)
+    },
+
+    logout(){
+        return HttpApiClient.post('/logout')
     }
 };
 

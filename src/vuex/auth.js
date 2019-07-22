@@ -55,6 +55,12 @@ export default {
             });
         },
 
+        logout({ dispatch }) {
+            return AuthService.logout().then(() => {
+                dispatch('clearAuth');
+            });
+        },
+
         setToken({ commit, dispatch }, token) {
 
             if(!token){
