@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Login from "./views/Auth/Login";
 import Register from "./views/Auth/Register";
 import Profile from "./views/ProfileAuthUser";
+import ProfileById from "./views/ProfileById";
 
 Vue.use(Router);
 
@@ -30,6 +31,12 @@ export default new Router({
       path: '/profile',
       name: 'profile',
       component: Profile
+    },
+    {
+      path: '/profile/:id',
+      name: 'profileById',
+      component: ProfileById,
+      props: true,
     },
   ]
 })

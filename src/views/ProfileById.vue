@@ -1,10 +1,10 @@
 <template>
 
     <div class="container emp-profile" v-if="user">
-
+                <private-message v-if="showModalForm"  :user="user" v-on:closeModalOfMessage="closeModal" />
         <div class="row">
 
-            <avatar v-if="user.avatar" :image="user.avatar.path" :isOwner="true" />
+            <avatar v-if="user.avatar" :image="user.avatar.path"/>
             <avatar v-else :isOwner="true" />
 
             <div class="col-md-6">
@@ -33,10 +33,9 @@
                 </div>
             </div>
             <div class="col-md">
-                <input v-if="!editing" type="submit" class="profile-edit-btn" @click="startEditProfile" value="Edit Profile"/>
-                <input v-else type="submit" class="btn btn-primary" @click="saveProfileChanges" value="Save changes"/>
-            </div>
+                <button type="button" class="btn btn-outline-secondary" @click="showModalMessage">Send message</button>
 
+            </div>
         </div>
         <div class="row">
 
@@ -50,7 +49,7 @@
             </div>
 
             <div class="col-md-8">
-                <data-user :user="user" :editable="true" />
+                <data-user :user="user" />
             </div>
 
         </div>
@@ -58,39 +57,61 @@
 </template>
 
 <script>
-
-    import {mapGetters} from "vuex";
     import Status from "../components/profile/Status";
     import Avatar from "../components/profile/Avatar";
     import Data from "../components/profile/Data";
+    import UserService from "../services/UserService";
+    import PrivateMessage from "../components/profile/PrivateMessage";
 
     export default {
+        props: ['id'],
 
-        methods: {
-            saveProfileChanges(){
-                this.$store.commit('profile/toggleEditing', false);
-                this.$store.commit('profile/makeSaved', true);
-            },
-
-            startEditProfile(){
-                this.$store.commit('profile/toggleEditing', true);
-            },
+        data() {
+            return {
+                showModalForm: false,
+                body: null,
+                loading: false,
+                user: null
+            }
         },
 
-        computed: {
-            ...mapGetters({
-                user: 'auth/userData'
-            }),
+        methods: {
 
-            editing(){
-                return this.$store.getters['profile/editing'];
+            fetchUserById(id) {
+                this.loading = true;
+                UserService.getProfileById(id).then((response) => {
+                    this.user = response.data.data
+                    // console.log(response.data.data);
+                }).catch(() => {
+                    this.$router.replace({name: 'notFound'})
+                });
+                this.loading = false;
+            },
+
+            showModalMessage() {
+                this.showModalForm = true;
+            },
+
+            closeModal() {
+                this.showModalForm = false;
             }
+        },
+
+        watch: {
+            '$route'() {
+                this.fetchUserById(this.id);
+            }
+        },
+
+        created() {
+            this.fetchUserById(this.id);
         },
 
         components: {
             'status': Status,
             'avatar': Avatar,
             'data-user': Data,
+            'private-message': PrivateMessage
         }
     }
 </script>

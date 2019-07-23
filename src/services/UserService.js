@@ -18,6 +18,10 @@ const UserService = {
 
     updateProfile(dataObject) {
         return HttpApiClient.put('/profile', dataObject);
+    },
+
+    getProfileById(id) {
+        return HttpApiClient.get('/profile/' + id);
     }
 };
 
