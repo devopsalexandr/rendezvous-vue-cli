@@ -5,6 +5,7 @@ import Login from "./views/Auth/Login";
 import Register from "./views/Auth/Register";
 import Profile from "./views/ProfileAuthUser";
 import ProfileById from "./views/ProfileById";
+import Search from "./views/Search";
 
 Vue.use(Router);
 
@@ -37,6 +38,11 @@ export default new Router({
       name: 'profileById',
       component: ProfileById,
       props: true,
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: Search,
     },
   ]
 })
