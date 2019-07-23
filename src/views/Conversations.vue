@@ -54,8 +54,13 @@
 <script>
 
     import {mapState} from "vuex";
+    import Conversation from "../components/conversations/Conversation";
 
     export default {
+
+        components: {
+            conversation: Conversation
+        },
 
         computed: {
             ...mapState('conversations', {
@@ -69,10 +74,10 @@
         },
 
         mounted() {
-            window.Echo.private('conversations.1')
-                .listen('ConversationCreated', () => {
-                    this.$store.dispatch('conversations/getConversations');
-                })
+            // window.Echo.private('conversations.1')
+            //     .listen('ConversationCreated', () => {
+            //         this.$store.dispatch('conversations/getConversations');
+            //     })
         }
     }
 
