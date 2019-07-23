@@ -35,6 +35,12 @@
             user: Object
         },
 
+        data() {
+            return {
+                body: null
+            }
+        },
+
         methods: {
             sendMessage() {
 
@@ -48,7 +54,7 @@
                     receiverId: this.user.id
                 };
 
-                // this.$store.dispatch('conversations/sendMessage', data);
+                this.$store.dispatch('conversations/sendMessage', data);
 
                 this.body = null;
 
