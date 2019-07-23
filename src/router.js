@@ -6,6 +6,7 @@ import Register from "./views/Auth/Register";
 import Profile from "./views/ProfileAuthUser";
 import ProfileById from "./views/ProfileById";
 import Search from "./views/Search";
+import Conversations from "./views/Conversations";
 
 Vue.use(Router);
 
@@ -43,6 +44,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: Search,
+    },
+    {
+      path: '/conversations',
+      name: 'conversations',
+      component: Conversations,
     },
   ]
 })
