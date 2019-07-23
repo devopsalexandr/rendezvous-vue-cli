@@ -2,6 +2,7 @@
 
     <div class="container emp-profile" v-if="user">
 
+<!--        <user-modal-message v-if="showModalForm"  :user="user" v-on:closeModalOfMessage="closeModal" />-->
 
 
         <div class="row">
@@ -27,6 +28,9 @@
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Interests</a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" id="photos-tab" data-toggle="tab" href="#photos" role="tab" aria-controls="photos" aria-selected="false">Photos</a>
+                        </li>
 
                     </ul>
                 </div>
@@ -88,6 +92,10 @@
                 this.showModalForm = true;
             },
 
+            closeModal() {
+                this.showModalForm = false;
+            },
+
         },
 
         computed: {
@@ -140,7 +148,7 @@
         color: #818182;
         margin-top: 5%;
     }
-    .proile-rating span{
+    .profile-rating span{
         color: #495057;
         font-size: 15px;
         font-weight: 600;

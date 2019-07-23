@@ -228,27 +228,7 @@
 
         </div>
 
-
-<!--        <user-photos :photos="user.photos" />-->
-        <div class="tab-pane fade" id="photos" role="tabpanel" aria-labelledby="photos-tab">
-
-<!--            <show-photo v-if="showModal" :image="img" @closed="showModal = false"></show-photo>-->
-
-            <div class="row" v-if="false">
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-<!--                        <div class="card-body" @click="show(photo.path)">-->
-<!--&lt;!&ndash;                            <img :src="photo.path" />&ndash;&gt;-->
-<!--                        </div>-->
-                    </div>
-                </div>
-            </div>
-            <div v-else>
-                User uploads photos soon....
-            </div>
-
-        </div>
-<!--        <user-photos :photos="user.photos" />-->
+        <photos :photos="user.photos" />
 
     </div>
 
@@ -257,6 +237,7 @@
 <script>
 
     import UserService from "../../services/UserService";
+    import Photos from "./Photos";
 
     export default {
         props: {
@@ -286,7 +267,7 @@
         },
 
         components: {
-            // 'user-photos': UserPhotos
+            'photos': Photos
         },
 
         computed: {
@@ -314,11 +295,8 @@
 </script>
 
 <style scoped>
-
-
     .profile-tab p{
         font-weight: 600;
         color: #0062cc;
     }
-
 </style>
