@@ -55,11 +55,13 @@
 
     import {mapState} from "vuex";
     import Conversation from "../components/conversations/Conversation";
+    import MessageHistory from "../components/conversations/MessageHistory";
 
     export default {
 
         components: {
-            conversation: Conversation
+            conversation: Conversation,
+            messageHistory: MessageHistory
         },
 
         computed: {

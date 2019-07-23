@@ -76,8 +76,8 @@ export default {
             });
         },
 
-        sendMessage({ commit }, receiverId, text) {
-            return UserConversationService.sendMessage(receiverId, text).then((response) => {
+        sendMessage({ commit }, { receiverId, body }) {
+            return UserConversationService.sendMessage(receiverId, body).then((response) => {
                 commit('addMessage', response.data.data);
             });
         }
