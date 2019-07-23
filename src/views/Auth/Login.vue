@@ -96,7 +96,7 @@
 
                     context: this
                 }).then(() => {
-                    this.$router.replace({name: 'home'})
+                    this.$router.replace({name: 'profile'})
                 });
             }
 
