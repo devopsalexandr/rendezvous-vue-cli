@@ -5,7 +5,7 @@
         <div class="row">
 
             <avatar v-if="user.avatar" :image="user.avatar.path"/>
-            <avatar v-else :isOwner="true" />
+            <avatar v-else />
 
             <div class="col-md-6">
 
@@ -13,9 +13,9 @@
                     <h5>
                         {{ user.name }}
                     </h5>
-                    <status :status="user.tiny_about" :editable="true" />
+                    <status :status="user.tiny_about" />
 
-                    <p class="profile-rating">RANKINGS : <span>8/10</span></p>
+<!--                    <p class="profile-rating">RANKINGS : <span>8/10</span></p>-->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
@@ -62,6 +62,7 @@
     import Data from "../components/profile/Data";
     import UserService from "../services/UserService";
     import PrivateMessage from "../components/profile/PrivateMessage";
+    import {mapGetters} from "vuex";
 
     export default {
         props: ['id'],
@@ -100,11 +101,23 @@
         watch: {
             '$route'() {
                 this.fetchUserById(this.id);
+            },
+
+            authUser() {
+                if(this.authUser && this.authUser.id === Number(this.id)){
+                    this.$router.replace({name: 'profile'});
+                }
             }
         },
 
         created() {
             this.fetchUserById(this.id);
+        },
+
+        computed: {
+            ...mapGetters({
+                authUser: 'auth/userData'
+            }),
         },
 
         components: {

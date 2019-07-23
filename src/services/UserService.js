@@ -12,7 +12,6 @@ const UserService = {
 
     updateStatus(string) {
         let status = { 'tiny_about': string };
-        // return HttpApiClient.put('/profile', status);
         return this.updateProfile(status);
     },
 
