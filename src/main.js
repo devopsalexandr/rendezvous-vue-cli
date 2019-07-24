@@ -11,6 +11,7 @@ import interceptorSetup from "./helpers/HttpInterceptor";
 import localforage from "localforage";
 import Echo from "laravel-echo"
 import Toasted from 'vue-toasted';
+import Handler from "./errorHandlers/Handler";
 
 Vue.config.productionTip = false;
 
@@ -45,6 +46,7 @@ window.Echo = new Echo({
 
 Vue.use(BootstrapVue);
 Vue.use(Toasted);
+Vue.config.errorHandler = Handler;
 
 new Vue({
   router,
