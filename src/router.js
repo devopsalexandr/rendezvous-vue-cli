@@ -8,6 +8,7 @@ import ProfileById from "./views/ProfileById";
 import Search from "./views/Search";
 import Conversations from "./views/Conversations";
 import store from './store'
+import NotFound from "./views/NotFound";
 
 Vue.use(Router);
 
@@ -77,6 +78,12 @@ const router = new Router({
         requiresAuth: true
       }
     },
+    {
+      path: '/404',
+      alias: '*',
+      name: 'notFound',
+      component: NotFound
+    }
   ]
 });
 
