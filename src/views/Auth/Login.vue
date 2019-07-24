@@ -17,7 +17,7 @@
                                            v-model="email" autofocus>
 
                                     <span class="invalid-feedback" role="alert" v-if="errors.email">
-                                        <strong v-for="e in errors.email">{{ e }}</strong>
+                                        <strong v-for="(e, index) in errors.email" :key="index">{{ e }}</strong>
                                     </span>
 
                                 </div>
@@ -32,7 +32,7 @@
                                            v-bind:class="{ 'is-invalid': errors.password }">
 
                                     <span class="invalid-feedback" role="alert" v-if="errors.password">
-                                        <strong v-for="e in errors.password">{{ e }}</strong>
+                                        <strong v-for="(e, index) in errors.password" :key="index">{{ e }}</strong>
                                     </span>
 
                                 </div>
