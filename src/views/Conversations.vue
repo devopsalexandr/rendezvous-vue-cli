@@ -68,7 +68,11 @@
             ...mapState('conversations', {
                 conversations: state => state.conversations,
                 conversation: state => state.conversation,
-            })
+            }),
+
+            authUser() {
+                return this.$store.getters['auth/userData'];
+            }
         },
 
         created() {
@@ -76,10 +80,24 @@
         },
 
         mounted() {
-            // window.Echo.private('conversations.1')
-            //     .listen('ConversationCreated', () => {
-            //         this.$store.dispatch('conversations/getConversations');
-            //     })
+            this.initEcho();
+        },
+
+        watch: {
+            authUser() {
+                this.initEcho();
+            }
+        },
+
+        methods: {
+            initEcho() {
+                if(this.authUser){
+                    window.Echo.private('conversations.'+ this.authUser.id)
+                        .listen('ConversationCreated', () => {
+                            this.$store.dispatch('conversations/getConversations');
+                        })
+                }
+            }
         }
     }
 

@@ -9,6 +9,8 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 import HttpApiClient from "./services/HttpApiClient";
 import interceptorSetup from "./helpers/HttpInterceptor";
 import localforage from "localforage";
+import Echo from "laravel-echo"
+import Toasted from 'vue-toasted';
 
 Vue.config.productionTip = false;
 
@@ -33,8 +35,16 @@ store.dispatch('auth/setToken').then(() => {
 });
 
 
+window.io = require('socket.io-client');
+
+window.Echo = new Echo({
+  broadcaster: 'socket.io',
+  host: window.location.hostname + ':6001',
+
+});
 
 Vue.use(BootstrapVue);
+Vue.use(Toasted);
 
 new Vue({
   router,

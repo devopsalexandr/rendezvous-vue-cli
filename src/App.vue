@@ -24,9 +24,37 @@
   import NavBar from "./views/NavBar";
 
   export default {
+
     components: {
       'NavBar' : NavBar
+    },
+
+    computed: {
+      authUser() {
+        return this.$store.getters['auth/userData'];
+      }
+    },
+
+    watch: {
+
+      authUser() {
+        if(this.authUser){
+          window.Echo.private('App.User.' + this.authUser.id)
+                  .listen('AuthUserVisitProfile', ({authUser}) => {
+                    if(this.authUser.id !== authUser.id){
+                      this.$toasted.show('У вас новый гость: ', {
+                        icon: 'face',
+                        action : {
+                          text: authUser.name,
+                          onClick: () =>  this.$router.replace({ name: 'profileById', params: { id: authUser.id }})
+                        }
+                      }).goAway(3500);
+                    }
+                  });
+        }
+      }
     }
+
   }
 </script>
 

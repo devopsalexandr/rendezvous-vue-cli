@@ -1,7 +1,7 @@
 <template>
 <div class="mesgs">
     <div class="msg_history" ref="messages">
-        <div v-for="message in conversation.messages" :key="message.id">
+        <div v-for="(message, index) in conversation.messages" :key="index">
 
             <template v-if="authUser.id  !== message.user.id">
                 <incoming-message :message="message"></incoming-message>
@@ -34,7 +34,7 @@
 
         data() {
             return {
-                isTyping: null
+                isTyping: null,
             }
         },
 
@@ -46,26 +46,45 @@
 
         computed: {
             authUser() {
-                return this.$store.getters['auth/user'].data;
+                return this.$store.getters['auth/userData'];
+            },
+            currentConversation() {
+                return this.conversation.data
+            }
+        },
+
+        methods: {
+            initEcho(){
+                if(this.currentConversation){
+                    this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+
+                    window.Echo.private('conversation.'+ this.currentConversation.id)
+                        .listen('MessageCreated', ({message}) => {
+
+                            if(this.authUser.id !== message.user.id) this.$store.commit('conversations/addMessage', message);
+
+                        }).listenForWhisper('typing', (typeEvent) => {
+                        this.isTyping = typeEvent;
+
+                        setTimeout(() => {
+                            this.isTyping = null;
+                        }, 3000);
+                    });
+                }
             }
         },
 
         mounted() {
-            this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
-
-            // window.Echo.private('conversation.'+ this.conversation.data.id)
-            //     .listen('MessageCreated', ({message}) => {
-            //         this.$store.commit('conversations/addMessage', message);
-            //
-            //     }).listenForWhisper('typing', (typeEvent) => {
-            //         this.isTyping = typeEvent;
-            //
-            //         setTimeout(() => {
-            //             this.isTyping = null;
-            //         }, 3000);
-            // });
+            this.initEcho();
         },
 
+        watch: {
+            currentConversation(newC, oldC) {
+                window.Echo.leave('conversation.'+ oldC.id);
+
+                this.initEcho();
+            }
+        },
 
         updated() {
             this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;

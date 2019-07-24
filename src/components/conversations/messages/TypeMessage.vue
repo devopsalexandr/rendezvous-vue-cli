@@ -34,11 +34,11 @@
 
             handleMessageInput(e) {
 
-                // window.Echo.private('conversation.' + this.conversation.id).whisper('typing', this.user.data);
-                // if(e.keyCode === 13 && !e.shiftKey){
-                //     e.preventDefault();
-                //     this.sendMessage();
-                // }
+                window.Echo.private('conversation.' + this.conversation.id).whisper('typing', this.user.data);
+                if(e.keyCode === 13 && !e.shiftKey){
+                    e.preventDefault();
+                    this.sendMessage();
+                }
             },
 
             sendMessage() {
