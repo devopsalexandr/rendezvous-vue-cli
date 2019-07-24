@@ -96,6 +96,7 @@ export default {
                 });
             }
 
+            setTokenToEcho(token);
             commit('setToken', token);
         },
 
