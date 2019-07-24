@@ -46,7 +46,7 @@
 
         computed: {
             authUser() {
-                return this.$store.getters['auth/user'].data;
+                return this.$store.getters['auth/userData'];
             }
         },
 
@@ -55,7 +55,8 @@
 
             window.Echo.private('conversation.'+ this.conversation.data.id)
                 .listen('MessageCreated', ({message}) => {
-                    this.$store.commit('conversations/addMessage', message);
+
+                    if(this.authUser.id !== message.user.id) this.$store.commit('conversations/addMessage', message);
 
                 }).listenForWhisper('typing', (typeEvent) => {
                     this.isTyping = typeEvent;
