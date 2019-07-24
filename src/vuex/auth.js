@@ -1,6 +1,7 @@
 import {SecurityService} from "../services/SecurityService";
 import AuthService from "../services/AuthService";
 import UserService from "../services/UserService";
+import {setTokenToEcho} from "../helpers";
 
 export default {
     namespaced: true,
@@ -90,7 +91,9 @@ export default {
         setToken({ commit, dispatch }, token) {
 
             if(!token){
-                return dispatch('checkStorageTokenExist');
+                return dispatch('checkStorageTokenExist').then((token) => {
+                    setTokenToEcho(token);
+                });
             }
 
             commit('setToken', token);

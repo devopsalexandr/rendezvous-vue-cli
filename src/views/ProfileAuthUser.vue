@@ -15,7 +15,7 @@
                     </h5>
                     <status :status="user.tiny_about" :editable="true" />
 
-                    <p class="profile-rating">RANKINGS : <span>8/10</span></p>
+<!--                    <p class="profile-rating">RANKINGS : <span>8/10</span></p>-->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
