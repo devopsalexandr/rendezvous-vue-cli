@@ -1,7 +1,7 @@
 <template>
 <div class="mesgs">
     <div class="msg_history" ref="messages">
-        <div v-for="message in conversation.messages" :key="message.id">
+        <div v-for="(message, index) in conversation.messages" :key="index">
 
             <template v-if="authUser.id  !== message.user.id">
                 <incoming-message :message="message"></incoming-message>
@@ -53,17 +53,17 @@
         mounted() {
             this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
 
-            // window.Echo.private('conversation.'+ this.conversation.data.id)
-            //     .listen('MessageCreated', ({message}) => {
-            //         this.$store.commit('conversations/addMessage', message);
-            //
-            //     }).listenForWhisper('typing', (typeEvent) => {
-            //         this.isTyping = typeEvent;
-            //
-            //         setTimeout(() => {
-            //             this.isTyping = null;
-            //         }, 3000);
-            // });
+            window.Echo.private('conversation.'+ this.conversation.data.id)
+                .listen('MessageCreated', ({message}) => {
+                    this.$store.commit('conversations/addMessage', message);
+
+                }).listenForWhisper('typing', (typeEvent) => {
+                    this.isTyping = typeEvent;
+
+                    setTimeout(() => {
+                        this.isTyping = null;
+                    }, 3000);
+            });
         },
 
 

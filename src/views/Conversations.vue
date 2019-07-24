@@ -53,7 +53,7 @@
 
 <script>
 
-    import {mapState} from "vuex";
+    import {mapGetters, mapState} from "vuex";
     import Conversation from "../components/conversations/Conversation";
     import MessageHistory from "../components/conversations/MessageHistory";
 
@@ -68,7 +68,11 @@
             ...mapState('conversations', {
                 conversations: state => state.conversations,
                 conversation: state => state.conversation,
-            })
+            }),
+
+            ...mapGetters('auth', [
+                'user'
+            ])
         },
 
         created() {
@@ -76,10 +80,10 @@
         },
 
         mounted() {
-            // window.Echo.private('conversations.1')
-            //     .listen('ConversationCreated', () => {
-            //         this.$store.dispatch('conversations/getConversations');
-            //     })
+            window.Echo.private('conversations.1')
+                .listen('ConversationCreated', () => {
+                    this.$store.dispatch('conversations/getConversations');
+                })
         }
     }
 
